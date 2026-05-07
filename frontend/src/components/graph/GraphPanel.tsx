@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import ForceGraph2D, { type ForceGraphMethods } from 'react-force-graph-2d'
+import ForceGraph2D, { type NodeObject } from 'react-force-graph-2d'
 import type { GraphData, GraphNode } from '../../types/graph'
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 }
 
 export default function GraphPanel({ data }: Props) {
-    const graphRef = useRef<ForceGraphMethods>(null)
+    const graphRef = useRef<any>(null)
     const containerRef = useRef<HTMLDivElement>(null)
     const [dimensions, setDimensions] = useState({ width: 800, height: 560 })
 
@@ -64,7 +64,7 @@ export default function GraphPanel({ data }: Props) {
 
                     nodeLabel={(node: GraphNode) => `${node.id}${node.group ? ` (${node.group})` : ''}`}
 
-                    nodeCanvasObject={(node: GraphNode & { x: number; y: number }, ctx, globalScale) => {
+                    nodeCanvasObject={(node: NodeObject<GraphNode>, ctx, globalScale) => {
                         const label = node.id
                         const fontSize = 12 / globalScale
 
