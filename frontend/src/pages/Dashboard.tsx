@@ -21,18 +21,17 @@ export default function Dashboard() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    loadGraph()
-  }, [])
-
-  const loadGraph = async () => {
-    try {
-      const graphData = await fetchGraph()
-      setGraph(graphData)
-    } catch (err) {
-      console.error(err)
-      setError('Unable to load graph data. Check that the backend is running.')
+    const load = async () => {
+      try {
+        const graphData = await fetchGraph()
+        setGraph(graphData)
+      } catch (err) {
+        console.error(err)
+        setError('Unable to load graph data. Check that the backend is running.')
+      }
     }
-  }
+    load()
+  }, [])
 
   const handleAsk = async (query: string) => {
     const userMessage: ChatMessage = { role: 'user', text: query }

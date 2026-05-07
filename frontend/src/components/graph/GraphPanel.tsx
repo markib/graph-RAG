@@ -1,14 +1,29 @@
-import { useEffect, useRef } from 'react'
-import ForceGraph2D from 'react-force-graph-2d'
-import type { GraphData } from '../../types/graph'
+import { useEffect, useRef, useState } from 'react'
+import ForceGraph2D, { type ForceGraphMethods } from 'react-force-graph-2d'
+import type { GraphData, GraphNode } from '../../types/graph'
 
 type Props = {
     data: GraphData
 }
 
 export default function GraphPanel({ data }: Props) {
-    const graphRef = useRef<any>(null)
+    const graphRef = useRef<ForceGraphMethods>(null)
     const containerRef = useRef<HTMLDivElement>(null)
+    const [dimensions, setDimensions] = useState({ width: 800, height: 560 })
+
+    useEffect(() => {
+        const updateDimensions = () => {
+            if (containerRef.current) {
+                setDimensions({
+                    width: containerRef.current.clientWidth,
+                    height: containerRef.current.clientHeight
+                })
+            }
+        }
+        updateDimensions()
+        window.addEventListener('resize', updateDimensions)
+        return () => window.removeEventListener('resize', updateDimensions)
+    }, [])
 
     useEffect(() => {
         graphRef.current?.d3ReheatSimulation()
@@ -33,8 +48,8 @@ export default function GraphPanel({ data }: Props) {
                     graphData={data}
 
                     // 🎯 responsive sizing
-                    width={containerRef.current?.clientWidth || 800}
-                    height={containerRef.current?.clientHeight || 560}
+                    width={dimensions.width}
+                    height={dimensions.height}
 
                     cooldownTicks={120}
                     d3AlphaDecay={0.04}
@@ -47,11 +62,9 @@ export default function GraphPanel({ data }: Props) {
                     linkWidth={1}
                     linkDirectionalParticles={0}
 
-                    nodeLabel={(node: any) =>
-                        `${node.id}${node.group ? ` (${node.group})` : ''}`
-                    }
+                    nodeLabel={(node: GraphNode) => `${node.id}${node.group ? ` (${node.group})` : ''}`}
 
-                    nodeCanvasObject={(node: any, ctx, globalScale) => {
+                    nodeCanvasObject={(node: GraphNode & { x: number; y: number }, ctx, globalScale) => {
                         const label = node.id
                         const fontSize = 12 / globalScale
 
