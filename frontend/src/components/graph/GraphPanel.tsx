@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
-import ForceGraph2D, { type NodeObject } from 'react-force-graph-2d'
+import ForceGraph2D, { type ForceGraphMethods, type NodeObject } from 'react-force-graph-2d'
 import type { GraphData, GraphNode } from '../../types/graph'
+
+type GraphLinkObject = {
+  [others: string]: unknown
+  source?: string | number | NodeObject<GraphNode> | undefined
+  target?: string | number | NodeObject<GraphNode> | undefined
+}
 
 type Props = {
     data: GraphData
 }
 
 export default function GraphPanel({ data }: Props) {
-    const graphRef = useRef<any>(null)
+    const graphRef = useRef<ForceGraphMethods<NodeObject<GraphNode>, GraphLinkObject> | undefined>(undefined)
     const containerRef = useRef<HTMLDivElement>(null)
     const [dimensions, setDimensions] = useState({ width: 800, height: 560 })
 
