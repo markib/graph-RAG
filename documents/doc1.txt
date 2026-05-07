@@ -1,0 +1,7 @@
+John is a customer who frequently shops online. He purchased a Laptop from Amazon in January 2024. The Laptop belongs to the Electronics category.
+
+Sarah is another customer who bought a Smartphone from BestBuy in February 2024. The Smartphone also belongs to the Electronics category.
+
+John later purchased Headphones from Amazon in March 2024. Headphones are part of the Accessories category.
+
+Amazon is an online marketplace, while BestBuy is a retail electronics store.

@@ -1,0 +1,7 @@
+Customers interact with products through purchases. Each purchase connects a User to a Product and may include metadata such as date and store.
+
+Products are grouped into categories. For example, Laptop and Smartphone belong to Electronics, while Headphones belong to Accessories.
+
+Stores like Amazon and BestBuy sell products. A product can be sold by multiple stores.
+
+Users may purchase multiple products over time, forming a network of relationships that can be queried to understand buying behavior.
